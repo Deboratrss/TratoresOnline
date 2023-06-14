@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -25,6 +26,7 @@ produtos_vendidos = {
     8: {"Item": "Trator Esportivo", "Preço unitário": "R$470.000,00", "Quantidade vendida": 42},
 }
 
+
 @app.get("/")
 def home():
     return {"Tipos de tratotes": len(produtos_estoque)}
@@ -43,3 +45,27 @@ def pegar_venda(id_vendidos: int):
         return produtos_vendidos[id_vendidos]
     else:
         return {"Erro: ID produto inexistente"}
+
+
+class DadosPessoais(BaseModel):
+    nome: str
+    num_telefone: str
+    email: str
+    endereco_entrega: str
+    comentarios: str
+
+
+class FormaPagamento(BaseModel):
+    num_cartao: str
+    mmaa: str
+    cvv: str
+    titular_cartao: str
+
+
+@app.post("/pedido")
+def pedido(personal_data: DadosPessoais, card_data: FormaPagamento):
+    info = {
+        "Dados_Pessoais": DadosPessoais.dict(),
+        "Forma_Pagamento": FormaPagamento.dict()
+    }
+    return {"info": info}
