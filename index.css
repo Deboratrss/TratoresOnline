@@ -1,0 +1,182 @@
+@import url('https://fonts.cdnfonts.com/css/montserrat');
+
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+header h1{
+    font-size: 16px;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    border-bottom: 1px solid #262626;
+}
+
+header img {
+    height: 28px;
+}
+
+.inicio {
+    display: flex;
+    gap: 50px;
+}
+
+.compras {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.compras a{
+    color: #262626;
+    text-decoration: none;   
+}
+
+.compras img{
+    height: 20px;
+}
+
+.title {
+    display: flex;
+    gap: 8px;
+}
+
+.meio {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+
+.meio a {
+    color: #262626;
+    text-decoration: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+main img {
+    width: 100%;
+    height: 500px;
+    padding: 16px 0;
+}
+
+.informativo {
+    display: flex;
+    padding: 0 40px;
+}
+
+.informativo__title {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.informativo__title h1{
+    font-weight:normal;
+    font-size: 40px;
+}
+
+.informativo__title h2{
+    font-weight: lighter;
+    font-size: 20px;
+}
+
+.informativo img {
+    height: 300px;
+    margin: 36px;
+}
+
+.informativo button{
+    display: flex;
+    padding: 8px 16px;
+    align-self: center;
+    margin-top: 8px;
+    background-color: #ffffff;    
+    border-radius: 5px;
+}
+
+.ideias h1 {
+    font-weight: normal;
+    padding: 0 40px;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card img{
+    height: 400px;
+}
+
+.ideias{
+    display: flex;
+    flex-direction: column;
+}
+
+.ideias button{
+    align-self: center;
+    display: flex;
+    padding: 8px 16px;
+    margin-top: 8px;
+    background-color: #ffffff;    
+    border-radius: 5px;
+    margin: 36px;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px;
+    border-top: 1px solid #262626;
+}
+
+.ajuda, .loja, .redes-sociais {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.ajuda a{
+    color: #262626;
+    text-decoration: none;  
+    padding: 8px 0;   
+}
+
+.loja a{
+    color: #262626;
+    text-decoration: none;  
+    padding: 8px 0;
+}
+
+.links{
+    display: flex;
+    gap: 16px;
+}
+
+.links a{
+    text-decoration: none; 
+}
+
+.redes-sociais img {
+    height: 24px;
+}
