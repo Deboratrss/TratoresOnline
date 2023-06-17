@@ -101,7 +101,6 @@ def salvar_informacoes_pessoais(info_pessoais: InformacoesPessoais):
     except:
         return {"Erro": "Ocorreu um erro ao salvar as informações pessoais"}
 
-
 @app.post("/informacoes_pagamento")
 def salvar_informacoes_pagamento(info_pagamento: InformacoesPagamento):
     try:
