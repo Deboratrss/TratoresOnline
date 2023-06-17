@@ -2,4 +2,4 @@ git status
 git add .
 git status
 git commit -m "Novas"
-git push origin master
+git pull origin main
