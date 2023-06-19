@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import sqlite3
-import traceback
 
 app = FastAPI()
 
@@ -29,14 +28,14 @@ cursor.execute("""
 """)
 
 produtos_estoque = {
-    1: {"Item": "Trator Verde", "Preço unitário": "R$ 300.000,00", "Quantidade em estoque": 3, "Oferta": True, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
-    2: {"Item": "Trator Amarelo", "Preço unitário": "R$ 300.000,00", "Quantidade em estoque": 4, "Oferta": True, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
-    3: {"Item": "Trator Azul", "Preço unitário": "R$ 300.000,00", "Quantidade em estoque": 2, "Oferta": True, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
-    4: {"Item": "Trator Vermelho", "Preço unitário": "R$ 280.000,00", "Quantidade em estoque": 8, "Oferta": False, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
-    5: {"Item": "Trator de Colheita", "Preço unitário": "R$170.000,00", "Quantidade em estoque": 10, "Oferta": True, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
-    6: {"Item": "Trator de Fertilizacao", "Preço unitário": "R$170.000,00", "Quantidade em estoque": 8, "Oferta": False, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
-    7: {"Item": "Trator de Colheita", "Preço unitário": "R$570.000,00", "Quantidade em estoque": 1, "Oferta": True, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
-    8: {"Item": "Trator Esportivo", "Preço unitário": "R$470.000,00", "Quantidade em estoque": 3, "Oferta": False, "Descricao": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis orci cursus, lacinia nisl ac, tempor lorem. Duis in vestibulum felis, id molestie sapien"},
+    1: {"Item": "Trator Verde", "Preço unitário": "R$ 300.000,00", "Quantidade em estoque": 3, "Oferta": True, "Descricao": "Apresentamos nosso trator verde, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável.Proporcionando assim um desempenho excepcional e eficiência"},
+    2: {"Item": "Trator Amarelo", "Preço unitário": "R$ 300.000,00", "Quantidade em estoque": 4, "Oferta": True, "Descricao": "Apresentamos nosso trator amarelo, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável. Proporcionando assim um desempenho excepcional e eficiência"},
+    3: {"Item": "Trator Azul", "Preço unitário": "R$ 300.000,00", "Quantidade em estoque": 2, "Oferta": True, "Descricao": "Apresentamos nosso trator azul, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável. Proporcionando assim um desempenho excepcional e eficiência"},
+    4: {"Item": "Trator Vermelho", "Preço unitário": "R$ 280.000,00", "Quantidade em estoque": 8, "Oferta": False, "Descricao": "Apresentamos nosso trator vermelho, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável. Proporcionando assim um desempenho excepcional e eficiência"},
+    5: {"Item": "Trator de Colheita", "Preço unitário": "R$170.000,00", "Quantidade em estoque": 10, "Oferta": True, "Descricao": "Apresentamos nosso trator de colheita, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável. Proporcionando assim um desempenho excepcional e eficiência"},
+    6: {"Item": "Trator de Fertilizacao", "Preço unitário": "R$170.000,00", "Quantidade em estoque": 8, "Oferta": False, "Descricao": "Apresentamos nosso trator de fertilização, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável. Proporcionando assim um desempenho excepcional e eficiência"},
+    7: {"Item": "Trator de Carga", "Preço unitário": "R$570.000,00", "Quantidade em estoque": 1, "Oferta": True, "Descricao": "Apresentamos nosso trator de carga, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável. Proporcionando assim um desempenho excepcional e eficiência"},
+    8: {"Item": "Trator Esportivo", "Preço unitário": "R$470.000,00", "Quantidade em estoque": 3, "Oferta": False, "Descricao": "Apresentamos nosso trator de esportivo, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável. Proporcionando assim um desempenho excepcional e eficiência"},
 }
 
 produtos_vendidos = {
@@ -50,6 +49,10 @@ produtos_vendidos = {
     8: {"Item": "Trator Esportivo", "Preço unitário": "R$470.000,00", "Quantidade vendida": 42},
 }
 
+pagamento_pix = {
+    1: {"Seu pedido foi confirmado. Aguardando a confirmação do pagamento via Pix."},
+    2: {"00020126560014br.gov.bcb.pix01152585966225420000215Tratores Online5204000053039865409300000.005802BR5901a6006CIDADE62070503***6304317A"}
+}
 
 class InformacoesPessoais(BaseModel):
     nome: str
@@ -112,3 +115,7 @@ def salvar_informacoes_pagamento(info_pagamento: InformacoesPagamento):
         return {"Mensagem": "Informações de pagamento salvas com sucesso"}
     except:
         return {"Erro": "Ocorreu um erro ao salvar as informações de pagamento"}
+
+@app.get("/pagamento_pix")
+async def pix():
+    return pagamento_pix
