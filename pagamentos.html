@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="pagamentos.css">
+  <title>Pagamentos</title>
+</head>
+<body>
+  <main>
+    <div class="foto">
+        <div class="info">
+            <h2>Seus produtos: 1 item</h2>
+            <div class="info1">
+                <img src="assets/image 27.svg" alt="trator"> 
+                <div id="produto">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="informacao">
+        <header>
+          <div class="passos">
+            <p>Dados pessoais</p>
+            <p class="seta" >&rarr;</p>
+            <p>Forma de pagamento</p>
+          </div>
+          <div class="pagamentos">
+            <button class="pagamento-button">Cartão</button>
+            <button id="button_pix" class="pagamento-button">PIX</button>
+          </div>
+          <div id="mensagem">
+          </div>
+        </header>
+        <form id="forme">
+            <input name="numero_cartao" type="text" placeholder="Número do cartão">
+            <div class="cartao">
+              <input name="data_validade" type="text" placeholder="MM/AA">
+              <input name="codigo_seguranca" type="text" placeholder="CVV">
+            </div>
+            <input name="nome" type="text" placeholder="Titular do cartão">
+            <input name="parcelas" type="text" placeholder="Parcelas">
+            </textarea>
+            <button>Concluir</button>
+        </form>
+    </div>
+</main>
+<script src="./pagamento.js"></script>
+</body>
+</html>

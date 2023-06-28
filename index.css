@@ -113,9 +113,56 @@ main img {
     padding: 0 40px;
 }
 
-.container{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.produtos-container {
+    display: flex;
+    position: relative;
+    padding: 0 6rem;
+}
+
+#produtos {
+    flex: 1;
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.produtos-container button.seta {
+    padding: 8px 16px;
+    border: none;
+    font-size: 32px;
+    z-index: 2;
+}
+
+.produtos-container button.seta-esquerda {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+}
+
+.produtos-container button.seta-direita {
+    position: absolute;
+    right: 4px;
+    top: 50%;
+}
+
+/*
+    codigo carousel
+*/
+.produtos-container .carousel {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    flex-wrap: nowrap;
+    animation: 30s carousel infinite;
+}
+
+@keyframes carousel {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-65%);
+    }
 }
 
 .card {
@@ -128,15 +175,24 @@ main img {
     height: 400px;
 }
 
+.card a {
+    
+}
+
 .ideias{
     display: flex;
     flex-direction: column;
 }
 
+.descricao{
+    color: #969696;
+    width: 525px;
+}
+
 .ideias button{
     align-self: center;
     display: flex;
-    padding: 8px 16px;
+    padding: 8px 40px;
     margin-top: 8px;
     background-color: #ffffff;    
     border-radius: 5px;

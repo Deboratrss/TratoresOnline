@@ -1,31 +1,40 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import sqlite3
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 DATABASE = 'ecommerce.db'
 
-conn = sqlite3.connect(DATABASE)
-cursor = conn.cursor()
+with sqlite3.connect(DATABASE) as conn:
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS informacoes_pessoais (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nome TEXT,
+            endereco TEXT,
+            email TEXT,
+            telefone TEXT
+        )
+    """)
 
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS informacoes_pessoais (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        nome TEXT,
-        endereco TEXT,
-        email TEXT
-    )
-""")
-
-cursor.execute("""
-    CREATE TABLE IF NOT EXISTS informacoes_pagamento (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        numero_cartao TEXT,
-        data_validade TEXT,
-        codigo_seguranca INTEGER
-    )
-""")
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS informacoes_pagamento (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            numero_cartao TEXT,
+            data_validade TEXT,
+            codigo_seguranca INTEGER
+        )
+    """)
 
 produtos_estoque = {
     1: {"Item": "Trator Verde", "Preço unitário": "R$ 300.000,00", "Quantidade em estoque": 3, "Oferta": True, "Descricao": "Apresentamos nosso trator verde, uma máquina potente e versátil, com um design moderno e resistente, possui motor eficiente, transmissão suave  e estrutura durável.Proporcionando assim um desempenho excepcional e eficiência"},
@@ -58,12 +67,15 @@ class InformacoesPessoais(BaseModel):
     nome: str
     endereco: str
     email: str
+    telefone: str
 
 
 class InformacoesPagamento(BaseModel):
+    nome: str
     numero_cartao: str
     data_validade: str
     codigo_seguranca: int
+    parcelas: int
 
 
 @app.get("/")
@@ -94,27 +106,36 @@ def pegar_venda(id_vendidos: int):
 
 @app.post("/informacoes_pessoais")
 def salvar_informacoes_pessoais(info_pessoais: InformacoesPessoais):
-    try:
-        nome = info_pessoais.nome
-        endereco = info_pessoais.endereco
-        email = info_pessoais.email
-        cursor.execute("INSERT INTO informacoes_pessoais (nome, endereco, email) VALUES (?, ?, ?)", (nome, endereco, email))
-        conn.commit()
-        return {"Mensagem": "Informações pessoais salvas com sucesso"}
-    except:
-        return {"Erro": "Ocorreu um erro ao salvar as informações pessoais"}
+    with sqlite3.connect(DATABASE) as conn:
+        cursor = conn.cursor()
+        try:
+            nome = info_pessoais.nome
+            endereco = info_pessoais.endereco
+            email = info_pessoais.email
+            telefone = info_pessoais.telefone
+
+            cursor.execute("INSERT INTO informacoes_pessoais (nome, endereco, email, telefone) VALUES (?, ?, ?, ?)", (nome, endereco, email, telefone))
+            conn.commit()
+            return {"Mensagem": "Informações pessoais salvas com sucesso"}
+        except Exception as error:
+            print(error)
+            return {"Erro": "Ocorreu um erro ao salvar as informações pessoais"}
 
 @app.post("/informacoes_pagamento")
 def salvar_informacoes_pagamento(info_pagamento: InformacoesPagamento):
-    try:
-        numero_cartao = info_pagamento.numero_cartao
-        data_validade = info_pagamento.data_validade
-        codigo_seguranca = info_pagamento.codigo_seguranca
-        cursor.execute("INSERT INTO informacoes_pagamento (numero_cartao, data_validade, codigo_seguranca) VALUES (?, ?, ?)", (numero_cartao, data_validade, codigo_seguranca))
-        conn.commit()
-        return {"Mensagem": "Informações de pagamento salvas com sucesso"}
-    except:
-        return {"Erro": "Ocorreu um erro ao salvar as informações de pagamento"}
+    with sqlite3.connect(DATABASE) as conn:
+        cursor = conn.cursor()
+        try:
+            nome = info_pagamento.nome
+            numero_cartao = info_pagamento.numero_cartao
+            data_validade = info_pagamento.data_validade
+            codigo_seguranca = info_pagamento.codigo_seguranca
+            parcelas = info_pagamento.parcelas
+            cursor.execute("INSERT INTO informacoes_pagamento (nome,numero_cartao, data_validade, codigo_seguranca,parcelas) VALUES (?,?, ?, ?,?)", (nome,numero_cartao, data_validade, codigo_seguranca,parcelas))
+            conn.commit()
+            return {"Mensagem": "Informações de pagamento salvas com sucesso"}
+        except:
+            return {"Erro": "Ocorreu um erro ao salvar as informações de pagamento"}
 
 @app.get("/pagamento_pix")
 async def pix():
