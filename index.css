@@ -145,30 +145,15 @@ main img {
     top: 50%;
 }
 
-/*
-    codigo carousel
-*/
-.produtos-container .carousel {
-    display: flex;
-    gap: 2rem;
-    padding: 2rem;
-    flex-wrap: nowrap;
-    animation: 30s carousel infinite;
-}
-
-@keyframes carousel {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-65%);
-    }
+#produtos::-webkit-scrollbar {
+    display: none;
 }
 
 .card {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 32px 16px;
 }
 
 .card img{
@@ -176,7 +161,12 @@ main img {
 }
 
 .card a {
-    
+    padding: 8px 40px;
+    color:black;
+    background-color: #ffffff;    
+    border-radius: 5px;
+    border: 1px solid black;
+    text-decoration: none;
 }
 
 .ideias{

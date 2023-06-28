@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const card = createCardElement({
                     id: trator,
-                    imagem: img,
+                    imagem: './assets/image 27.svg',
                     ...formatTrator(response[trator])
                 })
                 

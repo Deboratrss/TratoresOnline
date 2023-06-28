@@ -19,7 +19,7 @@ function salvarDados(event) {
             numero_cartao,
             data_validade,
             codigo_seguranca,
-            parcelas
+            parcelas: new Number(parcelas)
         }
 
         fetch ('http://localhost:8000/informacoes_pagamento',{
@@ -46,7 +46,7 @@ function copiarPix(event){
 
             const mensagem = document.getElementById('mensagem')
             mensagem.innerHTML = `
-            <p class='sucesso'> PIX copiado com seucesso!</p>
+            <p class='sucesso'> PIX copiado com secesso!</p>
             `
             usouPix = true
         }

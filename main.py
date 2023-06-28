@@ -32,7 +32,8 @@ with sqlite3.connect(DATABASE) as conn:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             numero_cartao TEXT,
             data_validade TEXT,
-            codigo_seguranca INTEGER
+            codigo_seguranca TEXT,
+            nome TEXT
         )
     """)
 
@@ -74,7 +75,7 @@ class InformacoesPagamento(BaseModel):
     nome: str
     numero_cartao: str
     data_validade: str
-    codigo_seguranca: int
+    codigo_seguranca: str
     parcelas: int
 
 
